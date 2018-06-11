@@ -23,15 +23,18 @@ app.use(helmet())
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  if ('OPTIONS' == req.method) {
-    return res.send(200)
-  }
-  else {
-    next();
-  }
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+  // res.header('Access-Control-Allow-Origin', '*')
+  // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  // res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  // if ('OPTIONS' == req.method) {
+  //   return res.sendStatus(200)
+  // }
+  // else {
+  //   next();
+  // }
 })
 
 // use body parser so we can get info from POST and/or URL parameters

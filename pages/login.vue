@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <login-form></login-form>
+    <login-form @submit="onSubmitted"></login-form>
   </section>
 </template>
 
@@ -11,7 +11,15 @@ export default {
   components: {
     LoginForm
   },
-  layout: 'login'
+  layout: 'login',
+  methods: {
+    onSubmitted(userData) {
+      this.$store.dispatch("doLogin", userData).then(() => {
+        this.$router.push('/')
+      })
+      .catch(e => console.log(e))
+    }
+  }
 }
 </script>
 
