@@ -1,18 +1,17 @@
 <template>
   <section class="container">
-    <div>
-      <logo/>
-    </div>
+    <login-form></login-form>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import LoginForm from '~/components/LoginForm.vue'
 
 export default {
   components: {
-    Logo
-  }
+    LoginForm
+  },
+  layout: 'login'
 }
 </script>
 

@@ -29,7 +29,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-default/index.css'
+    'element-ui/lib/theme-chalk/index.css'
   ],
 
   /*
@@ -52,6 +52,11 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    host: process.env.NODE_ENV === 'production' ? 'express-notes-api.herokuapp.com' : '127.0.0.1',
+    port: process.env.NODE_ENV === 'production' ? 443 : 8000,
+    prefix: '/api/',
+    https: process.env.NODE_ENV === 'production' ? true : false,
+    credentials: true
   },
 
   /*

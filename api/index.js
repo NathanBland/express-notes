@@ -19,7 +19,7 @@ mongoose.Promise = global.Promise
 mongoose.connect(process.env.dbURL || config.database || 'mongodb://localhost:27017/express-notes') // connect to database
 
 app.use(express.static('public'))
-// app.use(helmet())
+app.use(helmet())
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
@@ -49,6 +49,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', routes(express))
+
+app.get('*/*', (req, res, next) => {
+  return res.status(404).json({msg: 'invalid endpoint'})
+})
 
 server.listen(port)
 console.log('Magic happens at http://localhost:' + port)

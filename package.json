@@ -23,7 +23,7 @@
     "body-parser": "^1.18.3",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
-    "element-ui": "^1.4.9",
+    "element-ui": "^2.2.0",
     "express": "^4.16.3",
     "helmet": "^3.12.1",
     "jwt-simple": "^0.5.1",
