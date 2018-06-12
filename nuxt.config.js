@@ -67,7 +67,8 @@ module.exports = {
       'Content-Type': 'application/json',
     },
     https: process.env.DEPLOY_ENV === 'GH_PAGES' ? true : false,
-    withCredentials: true
+    withCredentials: true,
+    credentials: true
   },
 
   /*

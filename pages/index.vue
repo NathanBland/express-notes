@@ -1,14 +1,13 @@
 <template>
-  <section class="">
-  </section>
+  <note-list></note-list>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import NoteList from '~/components/NoteList'
 
 export default {
   components: {
-    Logo
+    NoteList
   }
 }
 </script>

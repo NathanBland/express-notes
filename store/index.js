@@ -6,12 +6,16 @@ const createStore = () => {
     state: {
       user: {
         isAuthenticated: false
-      }
+      },
+      notes: []
     },
     mutations: {
       setUser(state, user) {
         state.user = user;
       },
+      setNotes(state, notes) {
+        state.notes = notes;
+      }
     },
     actions: {
       // nuxtServerInit(vuexContext, context) {
@@ -25,8 +29,19 @@ const createStore = () => {
       //     })
       //     .catch(e => context.error(e));
       // },
-      setUser(vuexContext, user) {
-        vuexContext.commit("setUser", user);
+
+      // setUser(vuexContext, user) {
+      //   vuexContext.commit("setUser", user);
+      // },
+
+      userCheck(vuexContext) {
+        return this.$axios
+          .$post('auth/me')
+          .then(result => {
+            console.log('result:', result)
+            return vuexContext.commit('setUser', result)
+          })
+          .catch(e => new Error(e))
       },
       doLogin(vuexContext, user) {
         return this.$axios
@@ -36,12 +51,25 @@ const createStore = () => {
             return vuexContext.commit('setUser', result.user)
           })
           .catch(e => console.log(e));
+      },
+      getNotes(vuexContext) {
+        return this.$axios
+          .$get('notes')
+          .then(result => {
+            console.log('notes:', result)
+            return vuexContext.commit('setNotes', result)
+          })
+          .catch(e => console.log(e))
       }
     },
     getters: {
       user(state) {
         return state.user;
+      },
+      notes(state) {
+        return state.notes
       }
+
     }
   });
 };

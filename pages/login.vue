@@ -11,6 +11,11 @@ export default {
   components: {
     LoginForm
   },
+  mounted () {
+    this.$store.dispatch('userCheck').then(() => {
+      this.$router.push('/')
+    })
+  },
   layout: 'login',
   methods: {
     onSubmitted(userData) {

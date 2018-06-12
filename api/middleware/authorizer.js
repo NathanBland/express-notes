@@ -20,13 +20,38 @@ module.exports = (express) => {
       .then(user => {
         const session = user.activeSessions.indexOf(token)
         if (session > -1) {
-          // user.activeSessions.splice(session, 1)
-          req.user = user
-          next()
+          user.activeSessions.splice(session, 1)
+
+          let expiresDate = new Date()
+          expiresDate = new Date(expiresDate.setHours(expiresDate.getHours()+ (24 * 7)))
+
+          const token = jwt.encode({
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            displayName: user.displayName,
+            expiresAt: expiresDate,
+          }, tokenSecret)
+
+          const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            expires: expiresDate,
+            // maxAge: 60 * 60 * 24 * 7 // 1 week
+          }
+          user.activeSessions.push(token)
+          res.cookie('Authorization', token, cookieOptions)
+          return user.save()
         }
-      }).catch(e => {
+        return res.status(403).json({msg: 'Unauthorized'})
+      })
+      .then(savedUser => {
+        req.user = savedUser
+        return next()
+      })
+      .catch(e => {
         console.log('no session to remove?')
-        return res.status(200).json({msg: 'not signed in'})
+        return res.status(200).json({msg: 'not signed in', err: e})
       })
     } catch (e) {
       console.log("uh oh, failed to parse cookie, aborting:")
