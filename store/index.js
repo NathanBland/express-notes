@@ -30,7 +30,7 @@ const createStore = () => {
       },
       doLogin(vuexContext, user) {
         return this.$axios
-          .$post("auth/login", user, {withCredentials: true})
+          .$post("auth/login", user)
           .then(result => {
             console.log('result:', result)
             return vuexContext.commit('setUser', result.user)

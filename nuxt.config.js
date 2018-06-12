@@ -67,7 +67,7 @@ module.exports = {
       'Content-Type': 'application/json',
     },
     https: process.env.NODE_ENV === 'production' ? true : false,
-    credentials: true
+    withCredentials: true
   },
 
   /*
