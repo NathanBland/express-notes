@@ -5,7 +5,7 @@ const Note = require('../../models/note')
 module.exports = (express) => {
   const router = express.Router()
   router.get('/', (req, res, next) => {
-    Note.find({author: req.user._id})
+    Note.find({author: req.user._id, archived: {"$ne" : true }})
       .then(notes => {
         console.log('notes:', notes)
         return res.status(200).json(notes)

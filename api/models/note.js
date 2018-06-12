@@ -16,6 +16,7 @@ let note = new mongoose.Schema({
     type: String,
     required: true
   },
+  archived: Boolean,
   title: {
     type: String,
     default: '' + Date.now(),

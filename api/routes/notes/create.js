@@ -9,6 +9,7 @@ module.exports = (express) => {
       author: req.user._id,
       content: req.body.content,
       shared: req.body.shared,
+      archived: false,
       title: req.body.title
     })
     note.save()
