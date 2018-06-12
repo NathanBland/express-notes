@@ -23,7 +23,7 @@ app.use(helmet())
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.NODE_ENV === 'production' ? 'https://nathanbland.github.io/express-notes/' : 'http://127.0.0.1:3000')
+  res.setHeader('Access-Control-Allow-Origin', process.env.NODE_ENV === 'production' ? 'https://nathanbland.github.io' : 'http://127.0.0.1:3000')
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
   res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS, PATCH')
