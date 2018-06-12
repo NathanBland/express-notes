@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 let note = new mongoose.Schema({
   _id: {
     type: String,
-    default: uuid.v4()
+    default: uuid.v4(Math.random())
   },
   author: {
     type: String,

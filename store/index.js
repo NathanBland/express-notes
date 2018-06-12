@@ -7,7 +7,9 @@ const createStore = () => {
       user: {
         isAuthenticated: false
       },
-      notes: []
+      notes: [],
+      editNote: false,
+      editedNote: {}
     },
     mutations: {
       setUser(state, user) {
@@ -15,6 +17,12 @@ const createStore = () => {
       },
       setNotes(state, notes) {
         state.notes = notes;
+      },
+      setEditNote(state, status) {
+        state.editNote = status;
+      },
+      setEditedNote(state, note) {
+        state.editedNote = note;
       }
     },
     actions: {
@@ -43,9 +51,9 @@ const createStore = () => {
           })
           .catch(e => new Error(e))
       },
-      doLogin(vuexContext, user) {
+      doLogin(vuexContext, loginData) {
         return this.$axios
-          .$post("auth/login", user)
+          .$post("auth/" + loginData.action, loginData.user)
           .then(result => {
             console.log('result:', result)
             return vuexContext.commit('setUser', result.user)
@@ -60,6 +68,26 @@ const createStore = () => {
             return vuexContext.commit('setNotes', result)
           })
           .catch(e => console.log(e))
+      },
+      createNote(vuexContext, note) {
+        return this.$axios
+          .$post('notes', note.note)
+          .then(result => {
+            return result
+          })
+          .catch(e => console.log(e))
+      },
+      toggleEdit(vuexContext, note) {
+        if  (note.status === 'new') {
+          vuexContext.commit('setEditNote', true)
+          return vuexContext.commit('setEditedNote', {})
+        }
+        if (note.status === 'edit') {
+          vuexContext.commit('setEditNote', true)
+          return vuexContext.commit('setEditedNote', note.data)
+        }
+        vuexContext.commit('setEditNote', false)
+        return vuexContext.commit('setEditedNote', {})
       }
     },
     getters: {
@@ -69,7 +97,6 @@ const createStore = () => {
       notes(state) {
         return state.notes
       }
-
     }
   });
 };

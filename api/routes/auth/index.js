@@ -3,6 +3,7 @@ module.exports = (express) => {
 
   router.use('/login', require('./local/login')(express))
   router.use('/register', require('./local/register')(express))
+  router.use('/signup', require('./local/register')(express))
   router.use('/logout', require('./logout')(express))
   router.use('/me', require('./me')(express))
 

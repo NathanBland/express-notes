@@ -1,16 +1,18 @@
 const Mongoose = require('mongoose')
 const User = require('../../models/user')
 const Note = require('../../models/note')
+const uuid = require('uuid')
 
 module.exports = (express) => {
   const router = express.Router()
   router.post('/', (req, res, next) => {
     const note = new Note({
+      _id:  uuid.v4(Math.random()),
       author: req.user._id,
       content: req.body.content,
       shared: req.body.shared,
       archived: false,
-      title: req.body.title
+      title: req.body.title ? req.body.title : Date.now()
     })
     note.save()
       .then(note => {

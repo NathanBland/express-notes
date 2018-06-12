@@ -8,8 +8,10 @@
         @select="handleSelect"
         background-color="#545c64"
         text-color="#fff"
-        active-text-color="#ffd04b">
-        <el-menu-item index="0">My Notes</el-menu-item>
+        active-text-color="#ffd04b"
+        router>
+        <el-menu-item index="/">My Notes</el-menu-item>
+        <el-menu-item index="/note">New Note</el-menu-item>
       </el-menu>
     </el-header>
     <el-aside>
@@ -28,8 +30,13 @@ export default {
   },
   middleware: 'authenticated',
   methods: {
-    handleSelect () {
-
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+      this.activeLink = key
+      if (key === "1") {
+        return this.$store.dispatch('toggleEdit', {status: 'new'})
+      }
+      return this.$store.dispatch('toggleEdit', 'false')
     }
   }
 }
