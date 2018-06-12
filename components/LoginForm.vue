@@ -1,6 +1,7 @@
 <template>
   <el-card class="box-card">
     <el-form @submit.native.prevent="doLogin" ref="form" :model="user" label-width="120px">
+      <h1>Login</h1>
       <el-form-item label="Username">
         <el-input
           placeholder="username"

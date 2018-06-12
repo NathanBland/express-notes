@@ -6,6 +6,7 @@ const User = require('../models/user')
 module.exports = (express) => {
   const router = express.Router()
   router.use((req, res, next) => {
+    if (req.method === 'OPTIONS') return next()
     if (!req.headers.cookies && !req.headers.cookie) {
       console.log('no cookie. headers:', req.headers)
       return res.status(403).json({
