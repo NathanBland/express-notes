@@ -78,6 +78,7 @@ module.exports = {
   /*
   ** You can extend webpack config here
   */
+  publicPath: '/app/',
   vendor: ['babel-polyfill'],
   babel: {
     presets: [
