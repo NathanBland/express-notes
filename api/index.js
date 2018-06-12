@@ -23,18 +23,11 @@ app.use(helmet())
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  res.setHeader('Access-Control-Allow-Origin', process.env.NODE_ENV === 'production' ? 'https://nathanbland.github.io/express-notes/' : 'http://127.0.0.1:3000')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS, PATCH')
   next()
-  // res.header('Access-Control-Allow-Origin', '*')
-  // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-  // res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  // if ('OPTIONS' == req.method) {
-  //   return res.sendStatus(200)
-  // }
-  // else {
-  //   next();
-  // }
 })
 
 // use body parser so we can get info from POST and/or URL parameters

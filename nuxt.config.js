@@ -2,7 +2,14 @@ const pkg = require('./package')
 
 const nodeExternals = require('webpack-node-externals')
 
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/express-notes'
+  }
+} : {}
+
 module.exports = {
+  ...routerBase,
   mode: 'universal',
 
   /*
@@ -18,9 +25,6 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
-  },
-  router: {
-    base: '/express-notes/'
   },
   /*
   ** Customize the progress-bar color
@@ -57,6 +61,11 @@ module.exports = {
     host: process.env.NODE_ENV === 'production' ? 'express-notes-api.herokuapp.com' : '127.0.0.1',
     port: process.env.NODE_ENV === 'production' ? 443 : 8000,
     prefix: '/api/',
+    crossDomain: true,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
     https: process.env.NODE_ENV === 'production' ? true : false,
     credentials: true
   },

@@ -28,16 +28,16 @@ module.exports = (express) => {
         displayName: result.user.displayName,
         expiresAt: expiresDate,
       }, tokenSecret)
-      const activeCookie = cookie.serialize('Authorization', token, {
+      const cookieOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production' ? true : false,
         expires: expiresDate,
-        maxAge: 60 * 60 * 24 * 7 // 1 week
-      })
+        // maxAge: 60 * 60 * 24 * 7 // 1 week
+      }
       result.user.activeSessions.push(token)
       result.user.save()
       .then(savedUser => {
-        res.set('Set-Cookie', activeCookie)
+        res.cookie('Authorization', token, cookieOptions)
         return res.status(201).json({user: {
           id: savedUser.id,
           username: savedUser.username,

@@ -34,14 +34,15 @@ module.exports = (express) => {
       }, tokenSecret)
       const activeCookie = cookie.serialize('Authorization', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
+        domain: process.env.NODE_ENV === 'production' ? 'nathanbland.github.io' : '127.0.0.1',
+        secure: process.env.NODE_ENV === 'production' ? 'true' : 'false',
         expires: expiresDate,
         maxAge: 60 * 60 * 24 * 7 // 1 week
       })
       result.user.activeSessions.push(token)
       result.user.save()
       .then(savedUser => {
-        res.set('Set-Cookie', activeCookie)
+        res.setHeader('Set-Cookie', activeCookie)
         return res.status(201).json({user: {
           id: savedUser.id,
           username: savedUser.username,
