@@ -58,15 +58,15 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    host: process.env.NODE_ENV === 'production' ? 'express-notes-api.herokuapp.com' : '127.0.0.1',
-    port: process.env.NODE_ENV === 'production' ? 443 : 8000,
+    host: process.env.DEPLOY_ENV === 'GH_PAGES' ? 'express-notes-api.herokuapp.com' : '127.0.0.1',
+    port: process.env.DEPLOY_ENV === 'GH_PAGES' ? 443 : 8000,
     prefix: '/api/',
     crossDomain: true,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    https: process.env.NODE_ENV === 'production' ? true : false,
+    https: process.env.DEPLOY_ENV === 'GH_PAGES' ? true : false,
     withCredentials: true
   },
 
