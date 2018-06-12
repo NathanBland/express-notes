@@ -4,7 +4,7 @@ module.exports = (express) => {
   router.use('/auth', require('./auth')(express))
 
   router.use('/notes', require('../middleware/')(express))
-  router.use('/notes', require('./notes'))
+  router.use('/notes', require('./notes')(express))
 
   router.get('/', (req, res, next) => {
     return res.json({msg: 'Welcome to the api'})

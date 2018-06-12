@@ -1,3 +1,8 @@
+const cookie = require('cookie')
+const tokenSecret = process.env.tokenSecret || 'Please oh please set a real secret in env'
+const jwt = require('jwt-simple')
+const User = require('../models/user')
+
 module.exports = (express) => {
   const router = express.Router()
   router.use((req, res, next) => {
@@ -10,7 +15,6 @@ module.exports = (express) => {
     try {
       const token = cookie.parse(req.headers.cookies || req.headers.cookie).Authorization
       const decoded = jwt.decode(token, tokenSecret)
-      console.log('cookie parsed:', decoded)
       // user
       User.findById(decoded.id)
       .then(user => {

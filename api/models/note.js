@@ -16,6 +16,11 @@ let note = new mongoose.Schema({
     type: String,
     required: true
   },
+  title: {
+    type: String,
+    default: '' + Date.now(),
+    required: true
+  },
   shared: Boolean,
   shortUrl: {
     type: String,
