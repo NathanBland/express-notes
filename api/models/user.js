@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 let user = new mongoose.Schema({
   _id: {
     type: String,
-    default: uuid.v4()
+    default: uuid.v4(Math.random())
   },
   displayName: String,
   email: String,
