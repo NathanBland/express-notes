@@ -14,7 +14,8 @@
           <el-input
             type="textarea"
             v-model="note.content"
-            :rows="10">
+            :rows="10"
+            required>
           </el-input>
         </el-form-item>
         <el-form-item>
