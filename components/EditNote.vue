@@ -10,7 +10,7 @@
             </el-input>
           </el-form-item>
         </div>
-        <el-form-item label="Note">
+        <el-form-item label="Note - Supports markdown">
           <el-input
             type="textarea"
             v-model="note.content"
