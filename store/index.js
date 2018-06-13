@@ -45,7 +45,7 @@ const createStore = () => {
             console.log('result:', result)
             return vuexContext.commit('setUser', result.user)
           })
-          .catch(e => console.log(e));
+          // .catch(e => reject(e));
       },
       getNotes(vuexContext) {
         return this.$axios

@@ -8,22 +8,25 @@
       <el-form-item label="Username">
         <el-input
           placeholder="username"
-          v-model="user.username">
+          v-model="user.username"
+          required>
         </el-input>
       </el-form-item>
       <el-form-item label="Password">
         <el-input
           type="password"
           placeholder="****"
-          v-model="user.password">
+          v-model="user.password"
+          required>
         </el-input>
       </el-form-item>
       <transition name="el-fade-in-linear">
-      <el-form-item v-if="action === 'Signup'" label="Confirm Password">
+      <el-form-item v-if="action === 'signup'" label="Confirm Password">
         <el-input
           type="password"
           placeholder="****"
-          v-model="user.password2">
+          v-model="user.password2"
+          required>
         </el-input>
       </el-form-item>
       </transition>

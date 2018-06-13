@@ -22,7 +22,21 @@ export default {
       this.$store.dispatch("doLogin", userData).then(() => {
         this.$router.push('/')
       })
-      .catch(e => console.log(e))
+      .catch(e => {
+        console.log('e', e)
+        if (userData.action === 'signup') {
+          return this.$message({
+            type: 'error',
+            center: true,
+            message: 'That username is already in use'
+          });
+        }
+        return this.$message({
+            type: 'error',
+            center: true,
+            message: e.response.data.msg
+          });
+      })
     }
   }
 }

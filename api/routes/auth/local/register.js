@@ -39,21 +39,20 @@ module.exports = (express) => {
         // maxAge: 60 * 60 * 24 * 7 // 1 week
       }
       result.user.activeSessions.push(token)
-      result.user.save()
-      .then(savedUser => {
-        res.cookie('Authorization', token, cookieOptions)
-        return res.status(201).json({user: {
-          id: savedUser.id,
-          username: savedUser.username,
-          email: savedUser.email,
-          displayName: savedUser.displayName,
-          isAuthenticated: true
-        }})
-      }).catch(e => {
-        return res.status(500).json({msg: 'Internal Server error'})
-      })
+      res.cookie('Authorization', token, cookieOptions)
+      return result.user.save()
+    })
+    .then(savedUser => {
+      return res.status(201).json({user: {
+        id: savedUser.id,
+        username: savedUser.username,
+        email: savedUser.email,
+        displayName: savedUser.displayName,
+        isAuthenticated: true
+      }})
     }).catch(e => {
-      return res.status(500).json({msg: 'Internal Server error'})
+      console.log('error:', e)
+      return res.status(500).json({msg: 'Internal Server error', err: e})
     })
     // return res.json({msg: 'Welcome to the api'})
   })
