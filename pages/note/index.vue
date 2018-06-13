@@ -17,11 +17,19 @@ export default {
   layout: 'default',
   methods: {
     onSubmitted(noteData) {
-      this.$store.dispatch("createNote", noteData).then((data) => {
+      console.log('note data', noteData)
+      this.$store.dispatch("createNote", {...noteData}).then((data) => {
         console.log('note:', data)
         this.$router.push('/')
       })
-      .catch(e => console.log(e))
+      .catch(e => {
+        console.log(e)
+        return this.$message({
+          type: 'error',
+          center: true,
+          message: e.response.data.msg
+        });
+      })
     }
   }
 }

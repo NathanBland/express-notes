@@ -66,7 +66,7 @@ export default {
   methods: {
     saveNote () {
       console.log('componet submit event')
-      this.$emit('submit', this.note)
+      this.$emit('submit', this.$store.state.editNote ? this.note : {title: this.note.title, content: this.note.content})
     },
     toggleAction () {
       const swap = this.action

@@ -68,11 +68,10 @@ const createStore = () => {
       },
       createNote(vuexContext, note) {
         return this.$axios
-          .$post('notes', note.note)
+          .$post('notes', note.note ? note.note : note)
           .then(result => {
             return result
           })
-          .catch(e => console.log(e))
       },
       updateNote(vuexContext, note) {
         return this.$axios
