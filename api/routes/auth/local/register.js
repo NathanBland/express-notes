@@ -52,6 +52,8 @@ module.exports = (express) => {
       }).catch(e => {
         return res.status(500).json({msg: 'Internal Server error'})
       })
+    }).catch(e => {
+      return res.status(500).json({msg: 'Internal Server error'})
     })
     // return res.json({msg: 'Welcome to the api'})
   })
