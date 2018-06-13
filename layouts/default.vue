@@ -11,7 +11,7 @@
         active-text-color="#ffd04b"
         router>
         <el-menu-item index="/">My Notes</el-menu-item>
-        <el-menu-item index="/note">New Note</el-menu-item>
+        <el-menu-item index="/note">Compose</el-menu-item>
       </el-menu>
     </el-header>
     <el-aside>

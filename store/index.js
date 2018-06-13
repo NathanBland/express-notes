@@ -26,22 +26,9 @@ const createStore = () => {
       }
     },
     actions: {
-      // nuxtServerInit(vuexContext, context) {
-      //   return axios.get('https://nuxt-blog.firebaseio.com/posts.json')
-      //     .then(res => {
-      //       const postsArray = []
-      //       for (const key in res.data) {
-      //         postsArray.push({ ...res.data[key], id: key })
-      //       }
-      //       vuexContext.commit('setPosts', postsArray)
-      //     })
-      //     .catch(e => context.error(e));
-      // },
-
-      // setUser(vuexContext, user) {
-      //   vuexContext.commit("setUser", user);
-      // },
-
+      toggleEditMode(vuexContext, state) {
+        return vuexContext.commit('setEditNote', state)
+      },
       userCheck(vuexContext) {
         return this.$axios
           .$post('auth/me')
@@ -69,11 +56,40 @@ const createStore = () => {
           })
           .catch(e => console.log(e))
       },
+      getNote(vuexContext, id) {
+        return this.$axios
+          .$get('notes/' + id)
+          .then(result => {
+            // console.log('notes', result)
+            return result
+            // return vuexContext.commit('setNotes', result)
+          })
+          .catch(e => console.log(e))
+      },
       createNote(vuexContext, note) {
         return this.$axios
           .$post('notes', note.note)
           .then(result => {
             return result
+          })
+          .catch(e => console.log(e))
+      },
+      updateNote(vuexContext, note) {
+        return this.$axios
+          .$put('notes/' + note._id, note)
+          .then(result => {
+            // vuexContext.dispatch('getNotes')
+            return result
+          })
+          .catch(e => console.log(e))
+      },
+      deleteNote(vuexContext, note) {
+        return this.$axios
+          .$delete('notes/' + note._id)
+          .then(result => {
+            vuexContext.dispatch('getNotes')
+            return result
+
           })
           .catch(e => console.log(e))
       },
@@ -95,7 +111,7 @@ const createStore = () => {
         return state.user;
       },
       notes(state) {
-        return state.notes
+        return state.notes.reverse()
       }
     }
   });

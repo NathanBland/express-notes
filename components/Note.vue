@@ -28,7 +28,7 @@
         <div slot="header" class="clearfix">
             <span>{{note.title | formatDate}}</span>
           </div>
-        <span class="note-content" v-html="noteContent">
+        <span class="note-content" v-html="contentMarked(note)">
         </span>
       </el-card>
     </el-col>
@@ -46,26 +46,18 @@ export default {
     }
   },
   props: ['noteItem', 'edit'],
-  mounted () {
-    console.log('props:', this._props.noteItem)
-    this.note = this._props.noteItem
-  },
   computed: {
     action () {
-      return this.$store.state.editNote && this._props.noteItem.title ? 'update' : 'create'
-    },
-    noteContent () {
-      if (this.note.content || this._props.noteItem.content) {
-        return Marked(this.note.content || this._props.noteItem.content)
-      } else {
-        return ''
-      }
+      return this.$store.state.editNote && this.$store.state.editedNote.title ? 'update' : 'create'
     }
   },
   methods: {
+    contentMarked: (note) => {
+      return Marked(note.content)
+    },
     saveNote () {
       console.log('componet submit event')
-      this.$emit('submit', this.note)
+      this.$emit('submit', {note: this.note, action: this.action})
     },
     toggleAction () {
       const swap = this.action

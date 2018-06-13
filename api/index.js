@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 
 // use body parser so we can get info from POST and/or URL parameters
 app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // use morgan to log requests to the console

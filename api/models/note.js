@@ -1,6 +1,5 @@
 const uuid = require('uuid')
 const ShortUniqueId = require('short-unique-id')
-const uid = new ShortUniqueId()
 const mongoose = require('mongoose')
 
 let note = new mongoose.Schema({
@@ -25,7 +24,7 @@ let note = new mongoose.Schema({
   shared: Boolean,
   shortUrl: {
     type: String,
-    default: uid.randomUUID(6)
+    default: () => new ShortUniqueId().randomUUID(6)
   }
 })
 module.exports = mongoose.model('Note', note)
