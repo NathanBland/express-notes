@@ -21,7 +21,10 @@ let note = new mongoose.Schema({
     default: '' + Date.now(),
     required: true
   },
-  shared: Boolean,
+  shared: {
+    type: Boolean,
+    default: false
+  },
   shortUrl: {
     type: String,
     default: () => new ShortUniqueId().randomUUID(6)

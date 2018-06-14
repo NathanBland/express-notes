@@ -1,9 +1,10 @@
 <template>
-  <el-row :gutter="20" class="flex-row">
+  <section :gutter="20" class="flex-row">
     <transition-group name="el-zoom-in-center" class="">
       <note-list v-for="note in $store.getters.notes" :key="note._id" :note="note"></note-list>
     </transition-group>
-  </el-row>
+    <nuxt-child class="compose" :key="$route.params.id"></nuxt-child>
+  </section>
 </template>
 
 <script>
@@ -26,9 +27,19 @@ export default {
 </script>
 
 <style>
+.flex-row {
+  display: flex;
+  flex-flow: row nowrap;
+}
 .flex-row > span {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
+  width: 25vw;
+  flex: 0 1 auto;
+  margin-right: 1em;
+}
+.compose {
+  flex: 1 1 auto;
 }
 .flex-card-title {
   display: flex;
@@ -49,22 +60,22 @@ export default {
   margin-bottom: .5em;
 }
 .box-card .el-button-group {
-  position: absolute;
+  /* position: absolute;
   right: 5px;
-  top: 5px;
-  visibility: hidden;
-  opacity: 0;
-  animation: fade-out-buttons 500ms ease-in-out forwards;
+  top: 5px; */
+  /* visibility: hidden; */
+  /* opacity: 0; */
+  /* animation: fade-out-buttons 500ms ease-in-out forwards; */
   box-shadow: 0px 0px 1px 0px black;
 }
 .box-card {
   position: relative;
 }
-.box-card:hover .el-button-group {
+/* .box-card:hover .el-button-group {
   visibility: visible;
   opacity: 0;
   animation: fade-in-buttons 500ms ease-in-out forwards;
-}
+} */
 @keyframes fade-in-buttons {
   0% {
     opacity: 0;

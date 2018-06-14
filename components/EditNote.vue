@@ -1,37 +1,54 @@
 <template>
   <el-form @submit.native.prevent="saveNote" ref="form" :model="note">
     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <el-form-item label="Title">
-            <el-input
-              placeholder="ToDo items"
-              v-model="note.title">
-            </el-input>
-          </el-form-item>
-        </div>
-        <el-form-item label="Note - Supports markdown">
-          <el-input
-            type="textarea"
-            v-model="note.content"
-            :rows="10"
-            required>
-          </el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" native-type="submit">{{action | capitalize}}</el-button>
-          <el-button @click="cancelNote">Cancel</el-button>
-        </el-form-item>
-      </el-card>
-    </el-col>
-    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-      <el-card class="box-card preview">
-        <div slot="header" class="clearfix">
-            <span>{{note.title | formatDate}}</span>
-          </div>
-        <span class="note-content" v-html="noteContent">
-        </span>
-      </el-card>
+      <el-tabs type="card">
+        <el-tab-pane label="Write">
+          <el-card class="box-card">
+            <el-form-item label="Note - Supports markdown">
+              <el-input
+                type="textarea"
+                v-model="note.content"
+                :rows="10"
+                required>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" native-type="submit">{{action | capitalize}}</el-button>
+              <el-button @click="cancelNote">Cancel</el-button>
+            </el-form-item>
+          </el-card>
+        </el-tab-pane>
+        <el-tab-pane label="View">
+          <el-card class="box-card preview">
+            <div slot="header" class="clearfix">
+              <span>{{note.title | formatDate}}</span>
+            </div>
+            <span class="note-content" v-html="noteContent">
+            </span>
+          </el-card>
+        </el-tab-pane>
+        <el-tab-pane v-if="note.shortUrl">
+          <span slot="label"><i class="el-icon-share"></i> Share</span>
+          <el-card class="box-card preview">
+            <div slot="header" class="clearfix">
+              <span>This Note is currently {{note.shared ? 'public' : 'private'}}.</span>
+            </div>
+            <span class="note-content">
+              <div v-if="note.shared">
+                Here is your link: {{link}}
+                <el-button @click="unshareNote" type="primary" icon="el-icon-error">Make Private</el-button>
+              </div>
+              <div v-else>
+                <p>Would you like to share this note?</p>
+                <el-button @click="shareNote" type="primary" icon="el-icon-share">Share</el-button>
+              </div>
+            </span>
+          </el-card>
+        </el-tab-pane>
+        <el-tab-pane label="Delete" v-if="note.shortUrl">
+
+        </el-tab-pane>
+      </el-tabs>
     </el-col>
   </el-form>
 </template>
@@ -43,13 +60,16 @@ export default {
       note: {
         content: '',
         title: ''
-      }
+      },
+      link: ''
     }
   },
   props: ['noteItem', 'edit'],
   mounted () {
-    console.log('props:', this._props.noteItem)
+    console.log('props.:', this._props.noteItem)
     this.note = this._props.noteItem
+    this.link = this.note.shortUrl ? `${window.location.host}${this.$router.options.base}${this.note.shortUrl}` : ''
+    console.log('Window', this.$router.options.base)
   },
   computed: {
     action () {
@@ -65,13 +85,38 @@ export default {
   },
   methods: {
     saveNote () {
-      console.log('componet submit event')
+      // console.log('componet submit event')
       this.$emit('submit', this.$store.state.editNote ? this.note : {title: this.note.title, content: this.note.content})
     },
     toggleAction () {
       const swap = this.action
       this.action = this.otherAction
       this.otherAction = swap
+    },
+    shareNote () {
+      // console.log()
+      this.$store.dispatch('shareNote', {...this.note, shared: true})
+      .then(note => {
+        this.note = note
+      })
+      .catch(e => {
+        this.$message({
+          type: 'info',
+          message: 'There was a problem sharing the note'
+        });
+      })
+    },
+    unshareNote () {
+      this.$store.dispatch('shareNote', {...this.note, shared: false})
+      .then(note => {
+        this.note = note
+      })
+      .catch(e => {
+        this.$message({
+          type: 'info',
+          message: 'There was a problem making the note privates'
+        });
+      })
     },
     cancelNote () {
       this.$store.dispatch('toggleEdit', 'false')

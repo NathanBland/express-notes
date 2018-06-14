@@ -6,7 +6,7 @@ module.exports = (express) => {
   const router = express.Router()
   router.put('/:id', (req, res, next) => {
     console.log('params:', req.params)
-    Note.findOneAndUpdate({_id: req.params.id, author: req.user._id}, req.body)
+    Note.findOneAndUpdate({_id: req.params.id, author: req.user._id}, req.body, {new: true})
     .then(note => {
       return res.status(200).json(note)
     })

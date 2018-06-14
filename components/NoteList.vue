@@ -1,18 +1,18 @@
 <template>
-    <el-col :xs="24" :sm="24" :md="8" :lg="6" :xl="4">
-      <el-card class="grid-content box-card" shadow="hover">
+    <section :xs="24" :sm="24" :md="8" :lg="6" :xl="4" @click="editMode" class="note-list">
+      <el-card class="grid-content box-card" shadow="never">
         <div slot="header" class="flex-card-title">
           <span class="card-title-text">{{note.title | formatDate}}</span>
-          <el-button-group>
+          <!-- <el-button-group>
             <el-button type="" @click="editMode" icon="el-icon-edit"></el-button>
             <el-button type="primary" icon="el-icon-share" disabled></el-button>
             <el-button @click="confirmDelete(note)" type="danger" icon="el-icon-delete" ></el-button>
-          </el-button-group>
+          </el-button-group> -->
         </div>
         <span class="note-content" v-html="contentMarked(note)">
         </span>
       </el-card>
-    </el-col>
+    </section>
 </template>
 <script>
 import Marked from 'marked'
@@ -33,7 +33,7 @@ export default {
     editMode () {
       this.$store.dispatch("toggleEditMode", true)
       console.log('edit mode on', this._props.note._id)
-      this.$router.push({ path: `/note/${this._props.note._id}` })
+      this.$router.push({ path: `/${this._props.note._id}` })
     },
     confirmDelete (note) {
       this.$confirm('This will permanently delete the note. Continue?', 'Warning', {
@@ -49,6 +49,7 @@ export default {
               type: 'success',
               message: 'Delete completed'
             });
+            this.$router.push({ path: '/'})
           })
           .catch(e => {
             this.$message({
@@ -69,8 +70,9 @@ export default {
 
 <style lang="sass">
 .grid-content.box-card
-  margin: .5em 0em
+  margin: .25em 0em
 
-.card-title-text
+.note-list .box-card:hover
+  cursor: pointer
 
 </style>

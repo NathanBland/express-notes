@@ -11,7 +11,7 @@
         active-text-color="#ffd04b"
         router>
         <el-menu-item index="/">My Notes</el-menu-item>
-        <el-menu-item index="/note">Compose</el-menu-item>
+        <!-- <el-menu-item index="/">Compose</el-menu-item> -->
       </el-menu>
     </el-header>
     <el-aside>
@@ -44,9 +44,12 @@ export default {
 </script>
 
 <style>
+@import url('~/assets/inter-ui/inter-ui.css');
+
 body {
   padding: 0;
   margin: 0;
+  font-family: 'Inter UI', sans-serif;
 }
 
 </style>

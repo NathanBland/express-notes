@@ -70,8 +70,19 @@ const createStore = () => {
         return this.$axios
           .$post('notes', note.note ? note.note : note)
           .then(result => {
+            vuexContext.dispatch('getNotes')
             return result
           })
+      },
+      shareNote(vuexContext, note) {
+        return this.$axios
+        .$put('notes/' + note._id, note)
+        .then(result => {
+          // vuexContext.dispatch('getNotes')
+          console.log('note sharable?', result)
+          return result
+        })
+
       },
       updateNote(vuexContext, note) {
         return this.$axios

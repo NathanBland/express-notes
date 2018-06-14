@@ -6,6 +6,6 @@ Vue.filter('capitalize', function (value) {
     return value.charAt(0).toUpperCase() + value.slice(1)
 })
 Vue.filter('formatDate', (value) => {
-  const date = dayjs(+value)
-  return date.$D ? dayjs(+value).format('YYYY-MM-DD hh:mm:ss a') : value
+  const date = dayjs(value ? +value : Date.now())
+  return date.$D ? dayjs(value ? +value : Date.now()).format('YYYY-MM-DD hh:mm:ss a') : value
 })
