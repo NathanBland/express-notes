@@ -5,6 +5,7 @@ const uuid = require('uuid')
 
 module.exports = (express) => {
   const router = express.Router()
+  // router.use('/', require('../../middleware/authorizer')(express))
   router.post('/', (req, res, next) => {
     const note = new Note({
       _id:  uuid.v4(Math.random()),

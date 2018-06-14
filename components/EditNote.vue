@@ -1,7 +1,7 @@
 <template>
   <el-form @submit.native.prevent="saveNote" ref="form" :model="note">
     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-      <el-tabs type="card" :value="view ? 'View': 'Write'">
+      <el-tabs type="card">
         <el-tab-pane label="Write" v-if="!view">
           <el-card class="box-card">
             <el-form-item label="Note - Supports markdown">
@@ -121,7 +121,7 @@ export default {
       .catch(e => {
         this.$message({
           type: 'info',
-          message: 'There was a problem making the note privates'
+          message: 'There was a problem making the note private'
         });
       })
     },

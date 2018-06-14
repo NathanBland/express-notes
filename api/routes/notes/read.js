@@ -14,7 +14,7 @@ module.exports = (express) => {
         return res.status(500).json({msg: 'Internal Server error', err: e})
       })
   })
-  router.use('/', require('../../middleware/authorizer')(express))
+
   router.get('/', (req, res, next) => {
     Note.find({author: req.user._id, archived: {"$ne" : true }})
       .then(notes => {

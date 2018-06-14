@@ -4,6 +4,7 @@ const Note = require('../../models/note')
 
 module.exports = (express) => {
   const router = express.Router()
+  // router.use('/', require('../../middleware/authorizer')(express))
   router.delete('/:id', (req, res, next) => {
     console.log('params:', req.params)
     Note.findOneAndRemove({_id: req.params.id, author: req.user._id})
