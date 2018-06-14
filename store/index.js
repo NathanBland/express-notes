@@ -56,6 +56,16 @@ const createStore = () => {
           })
           .catch(e => console.log(e))
       },
+      getSharedNote(vuexContext, id) {
+        return this.$axios
+          .$get('notes/shared/' + id)
+          .then(result => {
+            // console.log('notes', result)
+            return result
+            // return vuexContext.commit('setNotes', result)
+          })
+          .catch(e => console.log(e))
+      },
       getNote(vuexContext, id) {
         return this.$axios
           .$get('notes/' + id)

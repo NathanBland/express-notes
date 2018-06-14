@@ -2,6 +2,8 @@ module.exports = (express) => {
   const router = express.Router()
 
   router.use('/', require('./read')(express))
+
+  router.use('/', require('../../middleware/authorizer')(express))
   router.use('/', require('./create')(express))
   router.use('/', require('./update')(express))
   router.use('/', require('./delete')(express))
