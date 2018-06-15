@@ -43,7 +43,7 @@ const createStore = () => {
             console.log('result:', result)
             return vuexContext.commit('setUser', result)
           })
-          .catch(e => new Error(e))
+          // .catch(e => new Error(e))
       },
       doLogin(vuexContext, loginData) {
         return this.$axios
