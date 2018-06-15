@@ -9,7 +9,8 @@ const createStore = () => {
       },
       notes: [],
       editNote: false,
-      editedNote: {}
+      editedNote: {},
+      search: ''
     },
     mutations: {
       setUser(state, user) {
@@ -23,9 +24,15 @@ const createStore = () => {
       },
       setEditedNote(state, note) {
         state.editedNote = note;
+      },
+      setSearch(state, search) {
+        state.search = search
       }
     },
     actions: {
+      searchNotes(vuexContext, searchText) {
+        return vuexContext.commit('setSearch', searchText)
+      },
       toggleEditMode(vuexContext, state) {
         return vuexContext.commit('setEditNote', state)
       },
@@ -131,6 +138,13 @@ const createStore = () => {
         return state.user;
       },
       notes(state) {
+        if (state.search.length > 0) {
+          const notes = state.notes.filter(note => {
+            console.log((note.content.indexOf(state.search) > 1) || (note.title.indexOf(state.search) > 1))
+            return (note.content.indexOf(state.search) > 1) || (note.title.indexOf(state.search) > 1)
+          })
+          return notes.reverse()
+        }
         return state.notes.reverse()
       }
     }

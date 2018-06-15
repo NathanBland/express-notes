@@ -75,6 +75,9 @@ module.exports = {
   /*
   ** Build configuration
   */
+ generate: {
+  fallback: '404.html'
+ },
  build: {
   /*
   ** You can extend webpack config here
