@@ -1,14 +1,16 @@
 <template>
   <section :gutter="20" class="flex-row">
     <section>
-      <router-link to="/"><el-button><i class="el-icon-plus"></i> New Note</el-button></router-link>
-      <el-input
-        placeholder="Type something"
-        v-model="searchText"
-        clearable
-        @change="searchNotes">
-        <template slot="prepend"><i class="el-icon-search"></i> Search</template>
-      </el-input>
+        <div class="actions">
+          <el-input
+            placeholder="Type something"
+            v-model="searchText"
+            clearable
+            @change="searchNotes">
+            <template slot="prepend"><i class="el-icon-search"></i></template>
+          </el-input>
+          <router-link to="/"><el-button><i class="el-icon-plus"></i></el-button></router-link>
+        </div>
       <!-- <el-button><i class="el-icon-search"></i> Search Notes</el-button> -->
       <transition-group name="el-zoom-in-center" tag="section" :xs="24" :sm="24" :md="8" :lg="6" :xl="4">
         <note-list v-for="note in $store.getters.notes" :key="note._id" :note="note"></note-list>
@@ -51,6 +53,18 @@ export default {
 .flex-row {
   display: flex;
   flex-flow: row nowrap;
+}
+.actions {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.actions .el-input-group {
+  width: unset;
+  flex: 1 1 auto;
+}
+.actions a {
+  flex: 0 1 auto;
 }
 .flex-row > section {
   display: flex;
@@ -96,10 +110,10 @@ export default {
 .box-card {
   position: relative;
 }
-.flex-row section a > button {
+/* .flex-row section a > button {
   width: 100%;
   margin-bottom: .25em;
-}
+} */
 /* .box-card:hover .el-button-group {
   visibility: visible;
   opacity: 0;

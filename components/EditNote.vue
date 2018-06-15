@@ -1,7 +1,16 @@
 <template>
   <el-form @submit.native.prevent="saveNote" ref="form" :model="note">
-    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
       <el-tabs type="card" :value="view ? view : 'write'">
+        <el-tab-pane label="View" name="view" v-if="note.content">
+          <el-card class="box-card preview">
+            <div slot="header" class="clearfix">
+              <span>{{note.title | formatDate}}</span>
+            </div>
+            <span class="note-content" v-html="noteContent">
+            </span>
+          </el-card>
+        </el-tab-pane>
         <el-tab-pane label="Write" name="write" v-if="$store.state.user.isAuthenticated">
           <el-card class="box-card">
             <el-form-item label="Note - Supports markdown">
@@ -9,22 +18,15 @@
                 type="textarea"
                 v-model="note.content"
                 :rows="10"
-                required>
+                required
+                :autofocus="true"
+                >
               </el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" :disabled="loading" native-type="submit">{{action | capitalize}}</el-button>
               <el-button @click="cancelNote">Cancel</el-button>
             </el-form-item>
-          </el-card>
-        </el-tab-pane>
-        <el-tab-pane label="View" name="view">
-          <el-card class="box-card preview">
-            <div slot="header" class="clearfix">
-              <span>{{note.title | formatDate}}</span>
-            </div>
-            <span class="note-content" v-html="noteContent">
-            </span>
           </el-card>
         </el-tab-pane>
         <el-tab-pane v-if="note.shortUrl && $store.state.user.isAuthenticated">
@@ -68,11 +70,11 @@ export default {
         content: '',
         title: ''
       },
-      loading: false,
+      // loading: false,
       link: ''
     }
   },
-  props: ['noteItem', 'edit', 'view'],
+  props: ['noteItem', 'edit', 'view', 'loading'],
   mounted () {
     console.log('props.:', this._props.noteItem)
     this.note = this._props.noteItem
@@ -94,7 +96,7 @@ export default {
   methods: {
     saveNote () {
       console.log('componet submit event')
-      this.loading = true
+      // this.loading = true
       this.$emit('submit', this.$store.state.editNote ? this.note : {title: this.note.title, content: this.note.content})
     },
     toggleAction () {

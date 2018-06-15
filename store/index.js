@@ -145,7 +145,7 @@ const createStore = () => {
           })
           return notes.reverse()
         }
-        return state.notes.reverse()
+        return state.notes.length > 0 ? state.notes.reverse() : []
       }
     }
   });
