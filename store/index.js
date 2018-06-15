@@ -87,7 +87,7 @@ const createStore = () => {
         return this.$axios
           .$post('notes', note.note ? note.note : note)
           .then(result => {
-            vuexContext.dispatch('getNotes')
+            // vuexContext.dispatch('getNotes')
             return result
           })
       },

@@ -51,8 +51,37 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
+
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      user: '/',
+      home: '/'
+    },
+    token: {
+      enabled: false,
+      localStorage: false,
+      cookie: false,
+    },
+    localStorage: false,
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/auth/login', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/me', method: 'post', propertyName:"isAuthenticated" }
+        }
+      }
+    },
+    cookie: false,
+    tokenRequired: false
+  },
+
 
   /*
   ** Axios module configuration

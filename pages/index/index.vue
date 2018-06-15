@@ -20,7 +20,9 @@ export default {
       console.log('note data', noteData)
       this.$store.dispatch("createNote", {...noteData}).then((data) => {
         console.log('note:', data)
-        // this.$router.push(`/${data._id}`)
+        this.$store.dispatch('getNotes').then(dataset => {
+          this.$router.push(`/${data._id}`)
+        })
       })
       .catch(e => {
         console.log(e)

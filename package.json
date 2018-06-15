@@ -19,6 +19,7 @@
     "node": "8.9.4"
   },
   "dependencies": {
+    "@nuxtjs/auth": "^4.5.1",
     "@nuxtjs/axios": "^5.0.0",
     "body-parser": "^1.18.3",
     "cookie": "^0.3.1",

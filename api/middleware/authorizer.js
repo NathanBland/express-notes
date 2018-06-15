@@ -11,7 +11,8 @@ module.exports = (express) => {
     if (!req.headers.cookies && !req.headers.cookie) {
       console.log('no cookie. headers:', req.headers)
       return res.status(403).json({
-        user: 'Unauthorized'
+        user: {isAuthenticated: false},
+        msg: 'Unauthorized'
       })
     }
     try {

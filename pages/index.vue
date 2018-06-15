@@ -59,6 +59,10 @@ export default {
   flex: 0 1 auto;
   margin-right: 1em;
 }
+.flex-row > section > section {
+  height: 85vh;
+  overflow-y: auto;
+}
 .compose {
   flex: 1 1 auto;
 }
