@@ -40,6 +40,14 @@
  * @version   v4.2.4+314e4831
  */
 
+/*!
+ * JavaScript Cookie v2.2.0
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
 /**
  * vue-meta v1.5.0
  * (c) 2018 Declan de Wet & Atinux
@@ -51,3 +59,10 @@ object-assign
 (c) Sindre Sorhus
 @license MIT
 */
+
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
