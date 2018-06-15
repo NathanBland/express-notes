@@ -1,7 +1,7 @@
 <template>
   <el-form @submit.native.prevent="saveNote" ref="form" :model="note">
     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-      <el-tabs type="card" :value="view">
+      <el-tabs type="card" :value="view ? view : 'write'">
         <el-tab-pane label="Write" name="write" v-if="$store.state.user.isAuthenticated">
           <el-card class="box-card">
             <el-form-item label="Note - Supports markdown">
