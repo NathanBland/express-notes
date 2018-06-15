@@ -1,6 +1,6 @@
 <template>
     <section @click="editMode" class="note-list">
-      <router-link :to="{ path: `/${this._props.note._id}` }">
+      <router-link :to="{ path: `/${this._props.note._id}`, query: {display: 'view'} }">
         <el-card class="grid-content box-card" shadow="never">
           <div slot="header" class="flex-card-title">
             <span class="card-title-text">{{note.title | formatDate}}</span>

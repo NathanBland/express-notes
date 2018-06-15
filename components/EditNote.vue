@@ -1,8 +1,8 @@
 <template>
   <el-form @submit.native.prevent="saveNote" ref="form" :model="note">
     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-      <el-tabs type="card">
-        <el-tab-pane label="Write" v-if="!view">
+      <el-tabs type="card" :value="view">
+        <el-tab-pane label="Write" name="write" v-if="$store.state.user.isAuthenticated">
           <el-card class="box-card">
             <el-form-item label="Note - Supports markdown">
               <el-input
@@ -13,12 +13,12 @@
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" native-type="submit">{{action | capitalize}}</el-button>
+              <el-button type="primary" :disabled="loading" native-type="submit">{{action | capitalize}}</el-button>
               <el-button @click="cancelNote">Cancel</el-button>
             </el-form-item>
           </el-card>
         </el-tab-pane>
-        <el-tab-pane label="View">
+        <el-tab-pane label="View" name="view">
           <el-card class="box-card preview">
             <div slot="header" class="clearfix">
               <span>{{note.title | formatDate}}</span>
@@ -27,7 +27,7 @@
             </span>
           </el-card>
         </el-tab-pane>
-        <el-tab-pane v-if="note.shortUrl && !view">
+        <el-tab-pane v-if="note.shortUrl && $store.state.user.isAuthenticated">
           <span slot="label"><i class="el-icon-share"></i> Share</span>
           <el-card class="box-card preview">
             <div slot="header" class="clearfix">
@@ -45,7 +45,7 @@
             </span>
           </el-card>
         </el-tab-pane>
-        <el-tab-pane label="Delete" v-if="note.shortUrl && !view">
+        <el-tab-pane label="Delete" v-if="note.shortUrl && $store.state.user.isAuthenticated">
           <el-card class="box-card preview">
             <div slot="header" class="clearfix">
               <span>Delete note?</span>
@@ -68,6 +68,7 @@ export default {
         content: '',
         title: ''
       },
+      loading: false,
       link: ''
     }
   },
@@ -92,7 +93,8 @@ export default {
   },
   methods: {
     saveNote () {
-      // console.log('componet submit event')
+      console.log('componet submit event')
+      this.loading = true
       this.$emit('submit', this.$store.state.editNote ? this.note : {title: this.note.title, content: this.note.content})
     },
     toggleAction () {

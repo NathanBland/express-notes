@@ -19,37 +19,24 @@ export default {
   layout: 'login',
   methods: {
     onSubmitted(userData) {
-      // console.log('userData:', userData)
-      if (userData.action === 'login') {
-        this.$auth.loginWith('local', { data: userData.user})
-        .then(() => this.$toast.success('Logged In!'))
-        .catch(e => {
-          this.$message({
+      this.$store.dispatch("doLogin", userData).then(() => {
+        this.$router.push('/')
+      })
+      .catch(e => {
+        console.log('e', e)
+        if (userData.action === 'signup') {
+          return this.$message({
+            type: 'error',
+            center: true,
+            message: 'That username is already in use'
+          });
+        }
+        return this.$message({
             type: 'error',
             center: true,
             message: e.response.data.msg
           });
-        })
-      } else {
-        this.$store.dispatch("doLogin", userData).then(() => {
-          this.$router.push('/')
-        })
-        .catch(e => {
-          console.log('e', e)
-          if (userData.action === 'signup') {
-            return this.$message({
-              type: 'error',
-              center: true,
-              message: 'That username is already in use'
-            });
-          }
-          return this.$message({
-              type: 'error',
-              center: true,
-              message: e.response.data.msg
-            });
-        })
-      }
+      })
     }
   }
 }

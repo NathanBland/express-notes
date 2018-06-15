@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20">
     <transition name="el-fade-in">
-      <edit-note v-if="note.title" @submit="onSubmitted" :noteItem="note" :edit="$store.state.editNote"></edit-note>
+      <edit-note v-if="note.title" @submit="onSubmitted" :noteItem="note" :view="$route.query.display" :edit="$store.state.editNote"></edit-note>
     </transition>
   </el-row>
 </template>
